@@ -33,7 +33,13 @@ class PcOxidProductBox extends HTMLElement {
                 prods.forEach(function(p) {
                     // TODO: replace!
                     if (count < num) {
-                        str += `<div class="box-article"><a target="_blank" href="${p.seo.url}">${p.title}</a><br><img src="${p.imageGallery.images[0].icon}"/></div>`;
+                        str += `
+                        <div class="box-article">
+                            <a target="_blank" href="${p.seo.url}">${p.title}</a><br><img src="${p.imageGallery.images[0].icon}"/>
+                            <button class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-4 rounded">
+                                In den Warenkorb
+                            </button>
+                        </div>`;
                         count++;
                     }
                 });
@@ -66,7 +72,7 @@ class PcOxidProductBox extends HTMLElement {
               border: 1px solid black;
               padding: 6px;
               margin-right: 8px;
-              height: 150px;
+              height: 210px;
           }
           a, a:active, a:visited, a:hover {
               color: seagreen;
@@ -78,12 +84,15 @@ class PcOxidProductBox extends HTMLElement {
             text-align: center;
           }
   
-          button {
+          .incbutton {
             width: 64px;
             height: 64px;
             border: none;
             background-color: seagreen;
             color: white;
+          }
+          .wkbutton {
+              margin: 10px 0 10px 0;
           }
           #debugInfo {
             font-size: 80%;
@@ -91,9 +100,9 @@ class PcOxidProductBox extends HTMLElement {
             margin-top: 20px;
           }
         </style>
-        <button class="rounded-full py-3 px-6" @click="${this.dec}">-</button>
+        <button class="incbutton rounded-full py-3 px-6" @click="${this.dec}">-</button>
         <span>${this.count}</span>
-        <button class="rounded-full py-3 px-6" @click="${this.inc}">+</button>
+        <button class="incbutton rounded-full py-3 px-6" @click="${this.inc}">+</button>
         <div class="container mx-auto px-4" id="debugInfo"></div>
       `;
     }
