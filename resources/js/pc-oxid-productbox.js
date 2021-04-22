@@ -1,7 +1,7 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
 import { login, logout } from './../services/auth.js';
 import { Config } from './../../config.js';
-import { getProduct, getProducts, getCategories } from './../services/api.js';
+import { getProducts, addToBasket } from './../services/api.js';
 class PcOxidProductBox extends HTMLElement {
     constructor() {
         super();
@@ -36,7 +36,7 @@ class PcOxidProductBox extends HTMLElement {
                         str += `
                         <div class="box-article">
                             <a target="_blank" href="${p.seo.url}">${p.title}</a><br><img src="${p.imageGallery.images[0].icon}"/>
-                            <button class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
+                            <button id="${p.id}" class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
                                 In den Warenkorb
                             </button>
                         </div>`;
@@ -44,6 +44,14 @@ class PcOxidProductBox extends HTMLElement {
                     }
                 });
                 debugInfo.innerHTML = str;
+                // add button event listener
+                const buttons = me.root.querySelectorAll('.wkbutton');
+                buttons.forEach(b => {
+                    b.addEventListener('click', async function (e) {
+                        e.preventDefault();
+                        await addToBasket(b.id, 1);
+                    })
+                });
             }    
         }
 

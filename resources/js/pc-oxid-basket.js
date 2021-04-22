@@ -1,7 +1,6 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
 import { login } from './../services/auth.js';
 import { Config } from './../../config.js';
-import { createBasket } from './../services/api.js';
 class PcOxidBasket extends HTMLElement {
     constructor() {
         super();
@@ -11,13 +10,6 @@ class PcOxidBasket extends HTMLElement {
     // default component callback
     async connectedCallback() {
         let me = this;
-        // demo login
-        //let res = await login(Config.LOGIN_USERNAME, Config.LOGIN_PASSWORD);
-        
-        // create basket - does not work,
-        // can't execute mutation ...!?
-        //let basket = await createBasket();
-        
         me.update();
     }
 

@@ -1,5 +1,11 @@
 import { fetch } from './auth.js';
 import { Config } from './../../config.js';
+import { login } from './auth.js';
+import Cookies from '../lib/js.cookie.min.js';
+
+const retrieveBasketId = () => Cookies.get(Config.COOKIE_NAME_BASKET)
+const saveBasketId = token => Cookies.set(Config.COOKIE_NAME_BASKET, token)
+const clearBasketId = () => Cookies.remove(Config.COOKIE_NAME_BASKET)
 
 /**
  * Get single product
@@ -34,14 +40,26 @@ const getProduct = async (id) => {
     return payload;
 }
 
+/**
+ * Create a basket if needed
+ * @returns basket id
+ */
 const createBasket = async () => {
+    let bid = retrieveBasketId();
+    console.log('bid', bid);
+    if (typeof bid !== 'undefined') {
+        return bid;
+    }
+    // need to login to get token for basket actions
+    // token is stored in cookie then
+    await login(Config.LOGIN_USERNAME, Config.LOGIN_PASSWORD);
     let payload = false;
     try {
         let url = Config.PRODUCT_URI;
         let query = `mutation {
             basketCreate(
                 basket: {
-                    title: "myBasket",
+                    title: "wp-oxid-basket-pc-2",
                     public: false
                 }
             ){
@@ -60,7 +78,54 @@ const createBasket = async () => {
         console.warn('Error creating basket!', e);
         _handleError(e);
     }
-    return payload;
+    bid = payload.body.data.basketCreate.id;
+    saveBasketId(bid);
+    return bid;
+}
+
+/**
+ * Add article to OXID basket
+ * @param string productId 
+ * @param int amount 
+ * @returns 
+ */
+const addToBasket = async (productId, amount) => {
+    console.log('add to basket: ' + productId);
+    let bid = await createBasket();
+    if (!bid) {
+        alert('Oops, no basket!');
+        return;
+    }
+    let payload = false;
+    try {
+        let url = Config.PRODUCT_URI;
+        let query = `mutation {
+            basketAddProduct(
+                basketId: "${bid}",
+                productId:"${productId}",
+                amount: ${amount}
+            ) {
+                items {
+                    amount
+                    product {
+                        id
+                        title
+                    }
+                }
+            }
+        }`;
+        let opts = {
+            method: 'POST',
+            body: JSON.stringify({
+                query: query
+            })
+        };
+        payload = await fetch(url, opts);
+        console.log('add to basket payload', payload);
+    } catch (e) {
+        console.warn('Error adding to basket!', e);
+        _handleError(e);
+    }
 }
 
 /**
@@ -172,5 +237,5 @@ export {
     getProduct,
     getProducts,
     getCategories,
-    createBasket
+    addToBasket
 }

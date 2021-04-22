@@ -7,6 +7,7 @@ const Config = {
     LOGIN_PASSWORD: 'admin',
     // Token cookie name
     COOKIE_NAME: 'PCGQLC',
+    COOKIE_NAME_BASKET: 'PCGQLCBASKET',
     PRODUCT_URI: API_BASE_URI + ''
 }
 export { API_BASE_URI, Config };
