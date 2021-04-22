@@ -2,7 +2,7 @@
 
 ## Idea
 
-OXID Produkte und Warenkorb möglichst leichtgewichtig in Wordpress und andere externe Anwendungen integrieren.
+Lightweight integration of OXID products and basket into Wordpress and other external apps.
 
 Daher möglichst wenig Wordpress Code verwenden. Stattdessen nur einzelne Webcomponents bauen, die die eigentliche Arbeit und Kommunikation per Javascript erledigen.
 
@@ -12,7 +12,7 @@ Daher möglichst wenig Wordpress Code verwenden. Stattdessen nur einzelne Webcom
 
 Install e.g. [OXVM](https://github.com/OXID-eSales/oxvm_eshop/tree/docker_developer_preview)
 
-Install GraphQL:
+Install [GraphQL](https://github.com/OXID-eSales/graphql-storefront-module):
 
 ```bash
 docker-compose exec php composer require oxid-esales/graphql-storefront
@@ -34,7 +34,7 @@ docker-compose exec php ./vendor/bin/oe-console oe:module:activate oe_graphql_st
 
 ### Install wordpress
 
-Download and unzip Wordpress into "source/wordpress". Go to http://oxideshop.localhost/wordpress and click through the Wordpress setup.
+Download and unzip Wordpress into __"source/wordpress"__. Go to http://oxideshop.localhost/wordpress and click through the Wordpress setup.
 You can use the same database as the OXID shop and use the "wp_" prefix for the wordpress tables.
 
 Now clone this plugin:
@@ -44,7 +44,7 @@ cd source/wordpress/wp-content/plugins
 git clone https://github.com/proud-commerce/wp-oxid-demo.git wp-oxid
 ```
 
-Copy wp-oxid/config.js.dist to wp-oxid/config.js and edit the shop URL on top.
+Copy _wp-oxid/config.js.dist_ to _wp-oxid/config.js_ and edit the shop URL on top.
 
 Now activate the Wordpress plugins in the WP admin area at http://oxideshop.localhost/wordpress/wp-admin
 
@@ -66,7 +66,7 @@ function pc_oxid_productbox($content)
 }
 ```
 
-Die Webcomponents laden dann die Daten und interagieren über GraphQL.
+The Webcomponents load the data and interact with the GraphQL backend, e.g.
 
 ```javascript
 import { html, render } from 'https://unpkg.com/lit-html?module';

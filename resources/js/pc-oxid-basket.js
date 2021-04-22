@@ -4,14 +4,13 @@ class PcOxidBasket extends HTMLElement {
         super();
 
         this.attachShadow({ mode: "open" });
-        console.log("Shadow basket ...");
 
         this.update();
     }
 
-
     template() {
         return html`
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <style>
           * {
             font-size: 90%;
@@ -23,15 +22,12 @@ class PcOxidBasket extends HTMLElement {
             top: 200px;
             width: 200px;
             height: 200px;
-            border: none;
             margin-left: 20px;
-            padding: 10px;
-            border-radius: 10px;
             background-color: seagreen;
             color: white;
           }
         </style>
-        <div>PcOxidBasket</div>
+        <div class="rounded-lg py-3 px-4">PcOxidBasket</div>
       `;
     }
 

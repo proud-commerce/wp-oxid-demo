@@ -55,6 +55,7 @@ class PcOxidProductBox extends HTMLElement {
 
     template() {
         return html`
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <style>
           * {
               font-family: "Arial, Helvetica, Sans Serif"
@@ -81,7 +82,6 @@ class PcOxidProductBox extends HTMLElement {
             width: 64px;
             height: 64px;
             border: none;
-            border-radius: 10px;
             background-color: seagreen;
             color: white;
           }
@@ -91,10 +91,10 @@ class PcOxidProductBox extends HTMLElement {
             margin-top: 20px;
           }
         </style>
-        <button @click="${this.dec}">-</button>
+        <button class="rounded-full py-3 px-6" @click="${this.dec}">-</button>
         <span>${this.count}</span>
-        <button @click="${this.inc}">+</button>
-        <div id="debugInfo"></div>
+        <button class="rounded-full py-3 px-6" @click="${this.inc}">+</button>
+        <div class="container mx-auto px-4" id="debugInfo"></div>
       `;
     }
 
