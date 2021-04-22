@@ -3,6 +3,8 @@ const API_BASE_URI = 'http://docker.vm/graphql/';
 const Config = {
     LOGIN_URI: API_BASE_URI + '',
     LOGOUT_URI: API_BASE_URI + '',
+    LOGIN_USERNAME: 'admin',
+    LOGIN_PASSWORD: 'admin',
     // Token cookie name
     COOKIE_NAME: 'PCGQLC',
     PRODUCT_URI: API_BASE_URI + ''

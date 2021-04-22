@@ -1,5 +1,6 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
 import { login, logout } from './../services/auth.js';
+import { Config } from './../../config.js';
 import { getProduct, getProducts, getCategories } from './../services/api.js';
 class PcOxidProductBox extends HTMLElement {
     constructor() {
@@ -7,7 +8,6 @@ class PcOxidProductBox extends HTMLElement {
         this.count = 0;
 
         this.root = this.attachShadow({ mode: "open" });
-        console.log("Darkest shadow ...");
 
     }
     // default component callback

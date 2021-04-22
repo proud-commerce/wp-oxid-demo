@@ -34,6 +34,35 @@ const getProduct = async (id) => {
     return payload;
 }
 
+const createBasket = async () => {
+    let payload = false;
+    try {
+        let url = Config.PRODUCT_URI;
+        let query = `mutation {
+            basketCreate(
+                basket: {
+                    title: "myBasket",
+                    public: false
+                }
+            ){
+                id
+            }
+        }`;
+        let opts = {
+            method: 'POST',
+            body: JSON.stringify({
+                query: query
+            })
+        };
+        payload = await fetch(url, opts);
+        console.log('basket payload', payload);
+    } catch (e) {
+        console.warn('Error creating basket!', e);
+        _handleError(e);
+    }
+    return payload;
+}
+
 /**
  * Get all products with filter
  * @param string filterString
@@ -142,5 +171,6 @@ const _handleError = (e) => {
 export {
     getProduct,
     getProducts,
-    getCategories
+    getCategories,
+    createBasket
 }
