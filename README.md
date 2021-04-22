@@ -1,12 +1,56 @@
 # OXID GraphQL Wordpress Plugin
 
-## Idee
+## Idea
 
 OXID Produkte und Warenkorb möglichst leichtgewichtig in Wordpress und andere externe Anwendungen integrieren.
 
 Daher möglichst wenig Wordpress Code verwenden. Stattdessen nur einzelne Webcomponents bauen, die die eigentliche Arbeit und Kommunikation per Javascript erledigen.
 
-In Wordpress werden nur die Resourcen geladen und 2 definierte Webcomponents eingebunden:
+## Installation
+
+### OXID and GraphQL
+
+Install e.g. [OXVM](https://github.com/OXID-eSales/oxvm_eshop/tree/docker_developer_preview)
+
+Install GraphQL:
+
+```bash
+docker-compose exec php composer require oxid-esales/graphql-storefront
+```
+
+Install and activate GraphQL modules:
+
+```bash
+docker-compose exec php ./vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
+
+docker-compose exec php ./vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
+
+docker-compose exec php ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
+
+docker-compose exec php ./vendor/bin/oe-console oe:module:activate oe_graphql_base
+
+docker-compose exec php ./vendor/bin/oe-console oe:module:activate oe_graphql_storefront
+```
+
+### Install wordpress
+
+Download and unzip Wordpress into "source/wordpress". Go to http://oxideshop.localhost/wordpress and click through the Wordpress setup.
+You can use the same database as the OXID shop and use the "wp_" prefix for the wordpress tables.
+
+Now clone this plugin:
+
+```bash
+cd source/wordpress/wp-content/plugins
+git clone https://github.com/proud-commerce/wp-oxid-demo.git wp-oxid
+```
+
+Copy wp-oxid/config.js.dist to wp-oxid/config.js and edit the shop URL on top.
+
+Now activate the Wordpress plugins in the WP admin area at http://oxideshop.localhost/wordpress/wp-admin
+
+## Technical details
+
+In Wordpress, only load the JS, CSS resources and add 2 defined Webcomponents to the WP source code:
 
 ```php
 function pc_oxid_productbox($content)
