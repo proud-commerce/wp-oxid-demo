@@ -36,7 +36,7 @@ class PcOxidProductBox extends HTMLElement {
                         str += `
                         <div class="box-article">
                             <a target="_blank" href="${p.seo.url}">${p.title}</a><br><img src="${p.imageGallery.images[0].icon}"/>
-                            <button class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-4 rounded">
+                            <button class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
                                 In den Warenkorb
                             </button>
                         </div>`;
