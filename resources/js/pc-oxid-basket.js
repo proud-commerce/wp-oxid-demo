@@ -51,8 +51,8 @@ class PcOxidBasket extends HTMLElement {
   
           .basketcontainer {
              position: absolute;
-            left: 240px;
-            top: 439px;
+            left: 190px;
+            top: 469px;
             width: 220px;
             min-height: 200px;
             margin-left: 20px;
