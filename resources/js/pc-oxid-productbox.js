@@ -28,7 +28,7 @@ class PcOxidProductBox extends HTMLElement {
             console.log('prods', prods);
             if (typeof debugInfo !== 'undefined') {
                 //debugInfo.innerHTML = JSON.stringify(prods);
-                let str = '<h3>OXID GraphQL Products</h3>';
+                let str = '<h3 style="font-family: sans-serif">OXID GraphQL Products</h3>';
                 let count = 0;
                 prods.forEach(function(p) {
                     // TODO: replace!
@@ -43,7 +43,7 @@ class PcOxidProductBox extends HTMLElement {
                         str += `
                         <div class="box-article">
                             <br><img style="float: left" src="${p.imageGallery.images[0].icon}"/>
-                            <div><a style="float: left;margin-left: 10px;color: #000" target="_blank" href="${p.seo.url}">${p.title}</a><br></div>
+                            <div style="margin-top: 3px"><a style="font-family: sans-serif;float: left;margin-left: 10px;color: #000" target="_blank" href="${p.seo.url}">${p.title}</a><br></div>
                             <div class="wrapper"></div>                            
                             ${button}
                         </div>`;
@@ -107,9 +107,8 @@ class PcOxidProductBox extends HTMLElement {
               width: 240px;
               border: 1px solid black;
               padding: 6px;
-              margin-right: 8px;
+              margin-right: 15px;
               height: 250px;
-              margin-left: 15px;
           }
           a, a:active, a:visited, a:hover {
               color: seagreen;
@@ -122,10 +121,11 @@ class PcOxidProductBox extends HTMLElement {
           }
   
           .incbutton {
-            width: 62px;
-            height: 62px;
+            width: 50px;
+            height: 50px;
             border:  3px solid seagreen;
             color: #000;
+            padding: 0px !important;
           }
           .wkbutton {
               margin: 10px 0 10px 0;
