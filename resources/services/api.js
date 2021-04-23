@@ -72,6 +72,7 @@ const getProduct = async (id) => {
                             price
                         }
                     }
+                    amount
                 }
             }
         }`;
