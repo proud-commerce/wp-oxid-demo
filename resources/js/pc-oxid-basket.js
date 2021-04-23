@@ -7,6 +7,11 @@ class PcOxidBasket extends HTMLElement {
         super();
 
         this.root = this.attachShadow({ mode: "open" });
+        console.log('Adding event listener ...');
+        this.addEventListener("updatebasket", function (e) {
+            console.log('listend to updatebasket event');
+            console.log(e);
+        });    
     }
     // default component callback
     async connectedCallback() {
@@ -16,37 +21,37 @@ class PcOxidBasket extends HTMLElement {
             console.log('pcBasket:', basket);
             me.basket = basket;
         }
-        //setTimeout(function() {
-            console.log('Adding event listener ...');
-            me.addEventListener("updatebasket", function (e) {
-                console.log('listend to updatebasket event');
-                console.log(e);
-            });    
-        //}, 1000);
         me.update();
+        //setTimeout(function() {
+        //}, 1000);
     }
 
     template() {
-        return html`
+        let me = this;
+        let h = html`
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <style>
           * {
             font-size: 90%;
           }
   
-          div {
+          .basketcontainer {
               position: absolute;
             float: right;
             top: 200px;
-            width: 200px;
+            width: 220px;
             height: 200px;
             margin-left: 20px;
             background-color: seagreen;
             color: white;
           }
         </style>
-        <div class="rounded-lg py-3 px-4">PcOxidBasket</div>
+        <div class="basketcontainer rounded-lg py-3 px-4">
+            <div class="basketHeader">PcOxidBasket</div>
+            <div class="basketContent">${JSON.stringify(me.basket)}</div>
+        </div>
       `;
+        return h;
     }
 
     update() {
