@@ -64,6 +64,15 @@ const getProduct = async (id) => {
                 id: "${id}"
             ) {
                 id
+                title
+                items {
+                    product {
+                        title
+                        price {
+                            price
+                        }
+                    }
+                }
             }
         }`;
         let opts = {

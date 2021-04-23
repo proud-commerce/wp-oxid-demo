@@ -48,7 +48,7 @@ class PcOxidBasket extends HTMLElement {
         </style>
         <div class="basketcontainer rounded-lg py-3 px-4">
             <div class="basketHeader">PcOxidBasket</div>
-            <div class="basketContent">${JSON.stringify(me.basket)}</div>
+            <div class="basketContent">${JSON.stringify(me.basket, null, 2)}</div>
         </div>
       `;
         return h;
