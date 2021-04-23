@@ -1,21 +1,38 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
-import { login } from './../services/auth.js';
 import { getUserBasket } from './../services/api.js';
-import { Config } from './../../config.js';
 class PcOxidBasket extends HTMLElement {
+    /**
+     * default component constructor
+     */
     constructor() {
         super();
-
+        this.handleUpdateEvent = this.handleUpdateEvent.bind(this);
         this.root = this.attachShadow({ mode: "open" });
     }
-    // default component callback
+    /**
+     * default component callback
+     */
     async connectedCallback() {
-        let me = this;
-        await me.update();
-        //setTimeout(function() {
-        //}, 1000);
+        super.connectedCallback && super.connectedCallback();
+        await this.update();
+        // add listener to window for inter-component events
+        window.addEventListener('pc-updatebasket-event', this.handleUpdateEvent);
     }
-
+    /**
+     * default component callback
+     */
+    disconnectedCallback() {
+        window.removeEventListener('pc-updatebasket-event', this.handleUpdateEvent);
+        super.disconnectedCallback && super.disconnectedCallback();
+    }
+    /**
+     * Update event to re-render basket
+     * @param Event e 
+     */
+    async handleUpdateEvent(e) {
+        console.log('window listend to updatebasket event');
+        await this.update();
+    }
     /**
      * Get plain HTML inside the dom / lit template
      * Something like "unsafeHTML", so use carefully
@@ -28,14 +45,16 @@ class PcOxidBasket extends HTMLElement {
         template.innerHTML = '<div>' + html + '</div>';
         return template.content.firstChild;
     }
-
+    /**
+     * Render content via LitHTML
+     * @returns Element
+     */
     template() {
         let me = this;
         let items = '<ul class="basketItems">';
         if (me.basket && typeof me.basket.body.data.basket !== undefined) {
             if (me.basket.body.data.basket.items !== undefined) {
-                me.basket.body.data.basket.items.forEach(function(item) {
-                    console.log('item', item);
+                me.basket.body.data.basket.items.forEach(function (item) {
                     items = items + `<li class="basketItem">${item.amount} x ${item.product.title} (${item.product.price.price}&euro;)</li>`;
                 });
             }
@@ -48,9 +67,8 @@ class PcOxidBasket extends HTMLElement {
           * {
             font-size: 90%;
           }
-  
           .basketcontainer {
-             position: absolute;
+            position: absolute;
             left: 190px;
             top: 469px;
             width: 220px;
@@ -58,7 +76,6 @@ class PcOxidBasket extends HTMLElement {
             margin-left: 20px;
             color: #000;
             border: 3px solid seagreen;
-;
           }
         </style>
         <div class="basketcontainer rounded-lg py-3 px-4">
@@ -68,10 +85,13 @@ class PcOxidBasket extends HTMLElement {
            </div>
         </div>
       `;
-      //  ${JSON.stringify(me.basket, null, 2)}
+        //  ${JSON.stringify(me.basket, null, 2)}
         return h;
     }
 
+    /**
+     * Refresh basket and re-render
+     */
     async update() {
         let me = this;
         let basket = await getUserBasket();
@@ -83,4 +103,6 @@ class PcOxidBasket extends HTMLElement {
     }
 }
 
-customElements.define("pc-oxid-basket", PcOxidBasket);
+if (!customElements.get('pc-oxid-basket')) {
+    customElements.define("pc-oxid-basket", PcOxidBasket);
+}

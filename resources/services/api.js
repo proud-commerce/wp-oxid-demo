@@ -43,7 +43,7 @@ const getProduct = async (id) => {
  * Get basket for current user
  * @param string id 
  */
- const getUserBasket = async (id) => {
+const getUserBasket = async (id) => {
     let bid = retrieveBasketId();
     if (typeof bid !== 'undefined') {
         let basket = await getBasket(bid);
@@ -55,7 +55,7 @@ const getProduct = async (id) => {
  * Get basket by id
  * @param string id 
  */
- const getBasket = async (id) => {
+const getBasket = async (id) => {
     let payload = false;
     try {
         let url = Config.PRODUCT_URI;
@@ -116,7 +116,7 @@ const createBasket = async () => {
     let payload = false;
     try {
         let url = Config.PRODUCT_URI;
-        // hack for today!!!
+        // TODO: hack for today!!!
         // we use the same user for demo purposes since we have no login ...
         // so we create multiple baskets for the admin user ...
         const basketIdent = 'wp-oxid-basket-' + _makeid(10);
@@ -146,7 +146,7 @@ const createBasket = async () => {
     if (typeof payload.body.data !== 'undefined') {
         bid = payload.body.data.basketCreate.id;
         saveBasketId(bid);
-        return bid;    
+        return bid;
     }
     return false;
 }
@@ -304,14 +304,14 @@ const _handleError = (e) => {
     }
 }
 const _makeid = (length) => {
-    var result           = [];
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = [];
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result.push(characters.charAt(Math.floor(Math.random() * 
- charactersLength)));
-   }
-   return result.join('');
+    for (var i = 0; i < length; i++) {
+        result.push(characters.charAt(Math.floor(Math.random() *
+            charactersLength)));
+    }
+    return result.join('');
 }
 // export public functions
 export {
