@@ -22,7 +22,7 @@ function pc_oxid_productbox($content)
     $pc_oxid_productbox = '';
     if (is_single()) {
         // add our webcomponents!
-        $pc_oxid_productbox .= '<div><pc-oxid-productbox></pc-oxid-productbox></div>';
+        $pc_oxid_productbox .= '<div><pc-oxid-productbox id="wp-oxid-productbox"></pc-oxid-productbox></div>';
         $pc_oxid_productbox .= '<pc-oxid-basket id="wp-oxid-basket"></pc-oxid-basket>';
     }
     $content .= $pc_oxid_productbox;

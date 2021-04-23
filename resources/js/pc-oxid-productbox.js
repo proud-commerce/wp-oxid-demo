@@ -3,19 +3,33 @@ import { login, logout } from './../services/auth.js';
 import { Config } from './../../config.js';
 import { getProducts, addToBasket } from './../services/api.js';
 class PcOxidProductBox extends HTMLElement {
-    constructor() {
+    /**
+     * default component constructor
+     */
+     constructor() {
         super();
         this.count = 0;
-
         this.root = this.attachShadow({ mode: "open" });
 
     }
-    // default component callback
-    async connectedCallback() {
+    /**
+     * default component callback
+     */
+     async connectedCallback() {
+        super.connectedCallback && super.connectedCallback();
         let me = this;
         me.update();
     }
-
+    /**
+     * default component callback
+     */
+     disconnectedCallback() {
+        super.disconnectedCallback && super.disconnectedCallback();
+    }
+    /**
+     * Get random products for demo
+     * @param int num 
+     */
     async renderProducts(num) {
         let me = this;
         let debugInfo = me.root.getElementById('debugInfo');
@@ -55,7 +69,6 @@ class PcOxidProductBox extends HTMLElement {
                 const buttons = me.root.querySelectorAll('.wkbutton');
                 buttons.forEach(b => {
                     b.addEventListener('click', async function (e) {
-                        //e.preventDefault();
                         await me.addItem(b.id, 1);
                     })
                 });
@@ -63,9 +76,15 @@ class PcOxidProductBox extends HTMLElement {
         }
 
     }
+    /**
+     * Add item to OXID basket via API
+     * Dispatch event to inform basket component
+     * @param string id 
+     * @param int am 
+     */
     async addItem(id, am) {
         let me = this;
-        const updateEvent = new CustomEvent("updatebasket", {
+        const updateEvent = new CustomEvent("pc-updatebasket-event", {
             bubbles: true,
             cancelable: false,
             composed: true,
@@ -74,11 +93,8 @@ class PcOxidProductBox extends HTMLElement {
             }
         });                        
         await addToBasket(id, am);
-        console.log('Dispatching event ...', updateEvent)
-        me.dispatchEvent(updateEvent);
-        console.log('window.basketComponent', window.basketComponent);
-        window.basketComponent.update();
-
+        window.dispatchEvent(updateEvent);
+        //window.basketComponent.update();
     }
 
     inc() {
@@ -90,7 +106,10 @@ class PcOxidProductBox extends HTMLElement {
         this.count--;
         this.update();
     }
-
+    /**
+     * Render LitHTML template
+     * @returns Element
+     */
     template() {
         return html`
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -146,11 +165,14 @@ class PcOxidProductBox extends HTMLElement {
         <div class="container mx-auto px-4" id="debugInfo"></div>
       `;
     }
-
+    /**
+     * Re-render products
+     */
     update() {
         render(this.template(), this.root, { eventContext: this });
         this.renderProducts(6);
     }
 }
-
-customElements.define("pc-oxid-productbox", PcOxidProductBox);
+if (!customElements.get('pc-oxid-productbox')) {
+    customElements.define("pc-oxid-productbox", PcOxidProductBox);
+}
