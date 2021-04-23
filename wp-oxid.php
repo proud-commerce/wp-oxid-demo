@@ -24,7 +24,7 @@ function pc_oxid_productbox($content)
         $pc_oxid_productbox .= '<h3>Hello, World from ProudCommerce Webcomponents!</h3>';
         // add our webcomponents!
         $pc_oxid_productbox .= '<div><pc-oxid-productbox></pc-oxid-productbox></div>';
-        $pc_oxid_productbox .= '<pc-oxid-basket></pc-oxid-basket>';
+        $pc_oxid_productbox .= '<pc-oxid-basket id="wp-oxid-basket"></pc-oxid-basket>';
     }
     $content .= $pc_oxid_productbox;
     return $content;
@@ -41,6 +41,7 @@ function pc_oxid_css()
     wp_enqueue_style('pc-oxid-style', plugin_dir_url(__FILE__) . 'resources/css/pc-oxid.css');
     wp_enqueue_script('pc-oxid-productbox', plugin_dir_url(__FILE__) . 'resources/js/pc-oxid-productbox.js');
     wp_enqueue_script('pc-oxid-basket', plugin_dir_url(__FILE__) . 'resources/js/pc-oxid-basket.js');
+    wp_enqueue_script('pc-oxid-main', plugin_dir_url(__FILE__) . 'resources/js/pc-oxid-main.js');
 }
 add_action('wp_enqueue_scripts', 'pc_oxid_css');
 

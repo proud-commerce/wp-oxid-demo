@@ -7,21 +7,11 @@ class PcOxidBasket extends HTMLElement {
         super();
 
         this.root = this.attachShadow({ mode: "open" });
-        console.log('Adding event listener ...');
-        this.addEventListener("updatebasket", function (e) {
-            console.log('listend to updatebasket event');
-            console.log(e);
-        });    
     }
     // default component callback
     async connectedCallback() {
         let me = this;
-        let basket = await getUserBasket();
-        if (basket) {
-            console.log('pcBasket:', basket);
-            me.basket = basket;
-        }
-        me.update();
+        await me.update();
         //setTimeout(function() {
         //}, 1000);
     }
@@ -54,7 +44,13 @@ class PcOxidBasket extends HTMLElement {
         return h;
     }
 
-    update() {
+    async update() {
+        let me = this;
+        let basket = await getUserBasket();
+        if (basket) {
+            console.log('pcBasket:', basket);
+            me.basket = basket;
+        }
         render(this.template(), this.root);
     }
 }

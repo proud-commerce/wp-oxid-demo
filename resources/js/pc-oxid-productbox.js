@@ -74,6 +74,8 @@ class PcOxidProductBox extends HTMLElement {
         await addToBasket(id, am);
         console.log('Dispatching event ...', updateEvent)
         me.dispatchEvent(updateEvent);
+        console.log('window.basketComponent', window.basketComponent);
+        window.basketComponent.update();
 
     }
 
