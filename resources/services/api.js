@@ -115,10 +115,14 @@ const createBasket = async () => {
     let payload = false;
     try {
         let url = Config.PRODUCT_URI;
+        // hack for today!!!
+        // we use the same user for demo purposes since we have no login ...
+        // so we create multiple baskets for the admin user ...
+        const basketIdent = 'wp-oxid-basket-' + _makeid(10);
         let query = `mutation {
             basketCreate(
                 basket: {
-                    title: "wp-oxid-basket",
+                    title: "${basketIdent}",
                     public: true
                 }
             ){
@@ -297,6 +301,16 @@ const _handleError = (e) => {
     } else {
         console.error('General api error!', e);
     }
+}
+const _makeid = (length) => {
+    var result           = [];
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result.push(characters.charAt(Math.floor(Math.random() * 
+ charactersLength)));
+   }
+   return result.join('');
 }
 // export public functions
 export {
