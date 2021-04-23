@@ -33,12 +33,17 @@ class PcOxidProductBox extends HTMLElement {
                 prods.forEach(function(p) {
                     // TODO: replace!
                     if (count < num) {
+                        let button = '';
+                        if (p.variants.length === 0) {
+                            button = `
+                            <button id="${p.id}" class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
+                                In den Warenkorb
+                            </button>`;
+                        }
                         str += `
                         <div class="box-article">
                             <a target="_blank" href="${p.seo.url}">${p.title}</a><br><img src="${p.imageGallery.images[0].icon}"/>
-                            <button id="${p.id}" class="wkbutton bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
-                                In den Warenkorb
-                            </button>
+                            ${button}
                         </div>`;
                         count++;
                     }

@@ -1,5 +1,6 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
 import { login } from './../services/auth.js';
+import { getUserBasket } from './../services/api.js';
 import { Config } from './../../config.js';
 class PcOxidBasket extends HTMLElement {
     constructor() {
@@ -10,6 +11,11 @@ class PcOxidBasket extends HTMLElement {
     // default component callback
     async connectedCallback() {
         let me = this;
+        let basket = await getUserBasket();
+        if (basket) {
+            console.log('pcBasket:', basket);
+            me.basket = basket;
+        }
         me.update();
     }
 

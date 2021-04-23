@@ -39,6 +39,50 @@ const getProduct = async (id) => {
     }
     return payload;
 }
+/**
+ * Get basket for current user
+ * @param string id 
+ */
+ const getUserBasket = async (id) => {
+    let bid = retrieveBasketId();
+    if (typeof bid !== 'undefined') {
+        let basket = await getBasket(bid);
+        return basket;
+    }
+    return false;
+}
+/**
+ * Get basket by id
+ * @param string id 
+ */
+ const getBasket = async (id) => {
+    let payload = false;
+    try {
+        let url = Config.PRODUCT_URI;
+        let query = `query {
+            basket (
+                id: "${id}"
+            ) {
+                id
+            }
+        }`;
+        let opts = {
+            method: 'POST',
+            body: JSON.stringify({
+                query: query
+            })
+        };
+        payload = await fetch(url, opts);
+        console.log('getBasket payload', payload);
+        if (typeof payload.body.data === 'undefined') {
+            payload = false;
+        }
+    } catch (e) {
+        console.warn('Error getting basket!', e);
+        _handleError(e);
+    }
+    return payload;
+}
 
 /**
  * Create a basket if needed
@@ -46,9 +90,15 @@ const getProduct = async (id) => {
  */
 const createBasket = async () => {
     let bid = retrieveBasketId();
-    console.log('bid', bid);
     if (typeof bid !== 'undefined') {
-        return bid;
+        // check if basket still exists
+        let basket = await getBasket(bid);
+        if (basket) {
+            return bid;
+        } else {
+            // remove basket id cookie!
+            clearBasketId();
+        }
     }
     // need to login to get token for basket actions
     // token is stored in cookie then
@@ -59,8 +109,8 @@ const createBasket = async () => {
         let query = `mutation {
             basketCreate(
                 basket: {
-                    title: "wp-oxid-basket-pc-2",
-                    public: false
+                    title: "wp-oxid-basket",
+                    public: true
                 }
             ){
                 id
@@ -78,9 +128,13 @@ const createBasket = async () => {
         console.warn('Error creating basket!', e);
         _handleError(e);
     }
-    bid = payload.body.data.basketCreate.id;
-    saveBasketId(bid);
-    return bid;
+    // may be undefined if basket already existed ...
+    if (typeof payload.body.data !== 'undefined') {
+        bid = payload.body.data.basketCreate.id;
+        saveBasketId(bid);
+        return bid;    
+    }
+    return false;
 }
 
 /**
@@ -149,6 +203,9 @@ const getProducts = async (filterString) => {
                 sku
                 price {
                     price
+                }
+                variants {
+                    id
                 }
                 seo {
                     url
@@ -237,5 +294,7 @@ export {
     getProduct,
     getProducts,
     getCategories,
+    getBasket,
+    getUserBasket,
     addToBasket
 }
