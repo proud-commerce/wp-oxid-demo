@@ -136,7 +136,7 @@ class PcOxidProductBox extends HTMLElement {
     }
 
     update() {
-        render(this.template(), this.root, { eventContext: this });
+        render(this.template(), this.root);
         this.renderProducts(6);
     }
 }

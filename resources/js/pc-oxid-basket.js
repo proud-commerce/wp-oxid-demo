@@ -16,7 +16,6 @@ class PcOxidBasket extends HTMLElement {
             console.log('pcBasket:', basket);
             me.basket = basket;
         }
-        me.update();
         //setTimeout(function() {
             console.log('Adding event listener ...');
             me.addEventListener("updatebasket", function (e) {
@@ -24,6 +23,7 @@ class PcOxidBasket extends HTMLElement {
                 console.log(e);
             });    
         //}, 1000);
+        me.update();
     }
 
     template() {
@@ -50,7 +50,7 @@ class PcOxidBasket extends HTMLElement {
     }
 
     update() {
-        render(this.template(), this.shadowRoot, { eventContext: this });
+        render(this.template(), this.root);
     }
 }
 
