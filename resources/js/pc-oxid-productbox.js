@@ -108,6 +108,7 @@ class PcOxidProductBox extends HTMLElement {
               border: 1px solid black;
               padding: 6px;
               margin-right: 15px;
+              margin-top: 15px;
               height: 250px;
           }
           a, a:active, a:visited, a:hover {

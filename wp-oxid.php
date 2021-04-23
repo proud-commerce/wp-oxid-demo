@@ -21,7 +21,6 @@ function pc_oxid_productbox($content)
 {
     $pc_oxid_productbox = '';
     if (is_single()) {
-        $pc_oxid_productbox .= '<h3>Hello, World from ProudCommerce Webcomponents!</h3>';
         // add our webcomponents!
         $pc_oxid_productbox .= '<div><pc-oxid-productbox></pc-oxid-productbox></div>';
         $pc_oxid_productbox .= '<pc-oxid-basket id="wp-oxid-basket"></pc-oxid-basket>';
