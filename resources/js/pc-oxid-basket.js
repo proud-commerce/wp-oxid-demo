@@ -50,14 +50,15 @@ class PcOxidBasket extends HTMLElement {
           }
   
           .basketcontainer {
-              position: absolute;
-            float: right;
-            top: 200px;
+             position: absolute;
+            left: 240px;
+            top: 439px;
             width: 220px;
             min-height: 200px;
             margin-left: 20px;
-            background-color: seagreen;
-            color: white;
+            color: #000;
+            border: 3px solid seagreen;
+;
           }
         </style>
         <div class="basketcontainer rounded-lg py-3 px-4">
