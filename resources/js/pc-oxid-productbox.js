@@ -53,7 +53,14 @@ class PcOxidProductBox extends HTMLElement {
                 const buttons = me.root.querySelectorAll('.wkbutton');
                 buttons.forEach(b => {
                     b.addEventListener('click', async function (e) {
-                        e.preventDefault();
+                        const updateEvent = new CustomEvent("updatebasket", {
+                            bubbles: true,
+                            cancelable: false,
+                            composed: true
+                        });                        
+                        console.log('Dispatching event ...', updateEvent)
+                        me.dispatchEvent(updateEvent);
+                        //e.preventDefault();
                         await addToBasket(b.id, 1);
                     })
                 });

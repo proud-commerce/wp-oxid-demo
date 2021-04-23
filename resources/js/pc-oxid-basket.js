@@ -6,7 +6,7 @@ class PcOxidBasket extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({ mode: "open" });
+        this.root = this.attachShadow({ mode: "open" });
     }
     // default component callback
     async connectedCallback() {
@@ -17,6 +17,13 @@ class PcOxidBasket extends HTMLElement {
             me.basket = basket;
         }
         me.update();
+        //setTimeout(function() {
+            console.log('Adding event listener ...');
+            me.addEventListener("updatebasket", function (e) {
+                console.log('listend to updatebasket event');
+                console.log(e);
+            });    
+        //}, 1000);
     }
 
     template() {
