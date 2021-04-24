@@ -1,6 +1,4 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
-import { login, logout } from './../services/auth.js';
-import { Config } from './../../config.js';
 import { getProducts, addToBasket } from './../services/api.js';
 class PcOxidProductBox extends HTMLElement {
     /**
@@ -42,7 +40,7 @@ class PcOxidProductBox extends HTMLElement {
             console.log('prods', prods);
             if (typeof debugInfo !== 'undefined') {
                 //debugInfo.innerHTML = JSON.stringify(prods);
-                let str = '<h3 style="font-family: sans-serif">OXID GraphQL Products</h3>';
+                let str = '<p class="text-lg text-black font-semibold">OXID GraphQL Products</p>';
                 let count = 0;
                 prods.forEach(function(p) {
                     // TODO: replace!
@@ -74,7 +72,6 @@ class PcOxidProductBox extends HTMLElement {
                 });
             }    
         }
-
     }
     /**
      * Add item to OXID basket via API
@@ -94,6 +91,7 @@ class PcOxidProductBox extends HTMLElement {
         });                        
         await addToBasket(id, am);
         window.dispatchEvent(updateEvent);
+        // we could use global element instead of events, too
         //window.basketComponent.update();
     }
 
@@ -114,9 +112,6 @@ class PcOxidProductBox extends HTMLElement {
         return html`
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <style>
-          * {
-              font-family: "Arial, Helvetica, Sans Serif"
-          }
           .wrapper{
               clear: both;
               overflow: hidden;
@@ -134,7 +129,7 @@ class PcOxidProductBox extends HTMLElement {
               color: seagreen;
               text-decoration: none;
           }
-          span {
+          .counter {
             width: 4rem;
             display: inline-block;
             text-align: center;
@@ -160,7 +155,7 @@ class PcOxidProductBox extends HTMLElement {
           }
         </style>
         <button class="incbutton rounded-lg py-3 px-6" @click="${this.dec}">-</button>
-        <span>${this.count}</span>
+        <span class="counter">${this.count}</span>
         <button class="incbutton rounded-lg py-3 px-6" @click="${this.inc}">+</button>
         <div class="container mx-auto px-4" id="debugInfo"></div>
       `;
